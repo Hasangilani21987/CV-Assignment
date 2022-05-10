@@ -7,19 +7,34 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 # Read Image:-
-# img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
-# cv2.imshow("image", img)
+# ReadImg = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
+
+# Display Image:-
+# ReadImg = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
+# cv2.imshow("image", ReadImg)
+
+# Save Image to disk:-
+# ReadImg = cv2.imread("photo.jpg", cv2.IMREAD_GRAYSCALE)
+# status = cv2.imwrite("New-photo.jpg", ReadImg)
+# NewReadImg = cv2.imread("New-photo.jpg", cv2.IMREAD_GRAYSCALE)
+# cv2.imshow("New Image", NewReadImg)
+
+# Resize Image:-
+# ReadImg = cv2.imread("photo.jpg", cv2.IMREAD_GRAYSCALE)
+# resized_Image = cv2.resize(ReadImg, (250, 250),
+#                            interpolation=cv2.INTER_NEAREST)
+# cv2.imshow("Resized Image", resized_Image)
 
 # Get Image Shape:-
 # img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
-
+#
 # print("Height of Image is =====> ", img.shape[0])
 # print("Width of Image is =====> ", img.shape[1])
 
 
 # Put Text On Image:-
 
-# img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
+# img = cv2.imread("photo.jpg", cv2.IMREAD_GRAYSCALE)
 # text_Image = cv2.putText(img, "OpenCV", (250, 250), cv2.FONT_HERSHEY_SIMPLEX, 1 , (0, 250, 0), 2)
 #
 # cv2.imshow("Text Image", text_Image)
@@ -28,27 +43,27 @@ from matplotlib import pyplot as plt
 
 # img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
 # line_Image = cv2.line(img, (0, 0), (img.shape[1], img.shape[0]), (0, 255, 0), 2)
-
+#
 # cv2.imshow("Line Image", line_Image)
 
 # Draw a Circle on an Image:-
 
 # img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
 # circle_Image = cv2.circle(img, (500, 300), 40, (0, 250, 0), 3)
-
+#
 # cv2.imshow("Circle Image", circle_Image)
 
 # Draw an Reactangle on an Image:-
 
 # img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
-# rectangle_Image = cv2.rectangle(img, (210, 220), (390, 300), (0, 255, 0), 2)
+# rectangle_Image = cv2.rectangle(img, (110, 220), (390, 300), (0, 255, 0), 2)
 #
 # cv2.imshow("Circle Image", rectangle_Image)
 
 # Draw an Square on an Image:-
 
 # img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
-# square_Image = cv2.rectangle(img, (250, 250), (350, 350), (0, 255, 0), 2)
+# square_Image = cv2.rectangle(img, (150, 150), (250, 250), (0, 255, 0), 2)
 #
 # cv2.imshow("square Image", square_Image)
 
@@ -56,30 +71,38 @@ from matplotlib import pyplot as plt
 
 # img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
 # gray_Image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
+#
 # cv2.imshow("Gray Image", gray_Image)
 
 # Convert GrayScaleImage to RGB:-
 
 # img = cv2.imread("photo.jpg", cv2.IMREAD_COLOR)
 # gray_Image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
+#
 # rgb_Image = cv2.cvtColor(gray_Image, cv2.COLOR_GRAY2RGB)
-
+#
 # cv2.imshow("RGB Image", rgb_Image)
 # cv2.imshow("GRAY Image", gray_Image)
 
 
 # Capture LiveStream From WebCam:-
 
-# video = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0)
+
+# if not cap.isOpened():
+#     raise IOError("Cannot open webcam")
 #
-# while(True):
-#     ret, frame = video.read()
-#     cv2.imshow('frame', frame)
+# while True:
+#     ret, frame = cap.read()
+#     frame = cv2.resize(frame, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
+#     cv2.imshow('Input', frame)
+#
+#     c = cv2.waitKey(1)
+#     if c == 27:
+#         break
 #
 #
-# video.release()
+# cap.release()
 
 # Read Video From Disk:-
 
@@ -90,7 +113,9 @@ from matplotlib import pyplot as plt
 # while cap.isOpened():
 #     ret, frame = cap.read()
 #     if ret:
-#         cv2.imshow('Frame', frame)
+#         resized_Image = cv2.resize(frame, (350, 300),
+#                                    interpolation=cv2.INTER_NEAREST)
+#         cv2.imshow('Frame', resized_Image)
 #     else:
 #         break
 #
@@ -98,11 +123,11 @@ from matplotlib import pyplot as plt
 
 # Blur an Image:-
 
-# img = cv2.imread('photo.jpg')
-# blur_Img = cv2.blur(img, (10, 10))
-#
-# cv2.imshow("Original Image", img)
+# ReadImg = cv2.imread('photo.jpg')
+# blur_Img = cv2.blur(ReadImg, (10, 10))
+# cv2.imshow("Original Image", ReadImg)
 # cv2.imshow('blurred image', blur_Img)
+
 
 # Detect Edges of Object in an Image:
 
@@ -122,7 +147,7 @@ from matplotlib import pyplot as plt
 #
 # counters, hierarchy = cv2.findContours(edge, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 #
-# print("Number of Contours found =====> " + str(len(counters)))
+# # print("Number of Contours found =====> " + str(len(counters)))
 #
 # # Draw all contours
 # # -1 signifies drawing all contours
@@ -147,21 +172,21 @@ from matplotlib import pyplot as plt
 # kernel = np.array([[-1, -1, -1],
 #                    [-1, 9, -1],
 #                    [-1, -1, -1]])
-
+#
 # sharpened = cv2.filter2D(img, -1, kernel)
 # cv2.imshow('Original Image', img)
 # cv2.imshow('Image Sharpening', sharpened)
 
 # Apply an Identity Filter  on an Image:-
 
-# img = cv2.imread("python.png")
+# img = cv2.imread("photo.jpg")
 # kernel = np.array([[0, 0, 0],
 #                    [0, 1, 0],
 #                    [0, 0, 0]])
 #
 # identity = cv2.filter2D(img, -1, kernel)
-# cv2.imshow('Original Image', img)
 # cv2.imshow('Identity Filter', identity)
+# cv2.imshow('Original Image', img)
 
 # Apply Gaussian Filter  on an Image:-
 
@@ -173,17 +198,17 @@ from matplotlib import pyplot as plt
 
 # Apply Median Filter  on an Image:-
 
-# img = cv2.imread('python.png')
-# Median_Filter = cv2.medianBlur(img, 5)
-#
-# cv2.imshow("Original Image", img)
-# cv2.imshow('Gaussian_Filter Image', Median_Filter)
+# ReadImg = cv2.imread('python.png')
+# Median_Filter = cv2.medianBlur(ReadImg, 5)
+# cv2.imshow("Original Image", ReadImg)
+# cv2.imshow('Median Filter Image', Median_Filter)
+
 
 # Apply Average Filter  on an Image:-
 
 # img = cv2.imread('python.png')
 # blur_Img = cv2.blur(img, (5, 5))
-
+#
 # cv2.imshow("Original Image", img)
 # cv2.imshow('blurred image', blur_Img)
 
@@ -236,13 +261,10 @@ from matplotlib import pyplot as plt
 
 # img = cv2.imread('photo.jpg')
 #
-# for gamma in [0.1, 0.5, 1.2, 2.2]:
-#     gamma_corrected = np.array(255 * (img / 255) ** gamma, dtype='uint8')
-#     cv2.imshow('gamma_transformed' + str(gamma) + '.jpg', gamma_corrected)
+# gamma_corrected = np.array(255 * (img / 255) ** 2.2, dtype='uint8')
+#
+# cv2.imshow('gamma_transformed', gamma_corrected)
 
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-
-
